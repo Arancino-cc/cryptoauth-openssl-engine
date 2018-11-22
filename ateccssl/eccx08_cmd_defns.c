@@ -138,7 +138,7 @@ static int get_cert(char *filename, atcacert_def_t * pCertDef, atcacert_def_t * 
         }
         else
         {
-            status = atcab_read_pubkey(15, g_signer_1_ca_public_key);
+            status = atcab_read_pubkey(11, g_signer_1_ca_public_key);
         }
 
         if(ATCA_SUCCESS == status)
@@ -283,6 +283,7 @@ static int get_key(ENGINE* e, uint16_t keyid, char * filename)
         pCfg->atcai2c.bus, pCfg->atcai2c.slave_address, keyid);
     key_str[31] = '\0';
 
+    printf("%s:%d - %s\n", __FILE__, __LINE__, key_str);
     pkey = eccx08_load_pubkey(e, key_str, NULL, NULL);
 
     if (pkey)
