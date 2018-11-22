@@ -44,6 +44,7 @@
 /* Additional OpenSSL Headers */
 #include <openssl/evp.h>
 
+#define ECC_DEBUG
 #ifdef ECC_DEBUG
 #define ECCX08_KEY_DEBUG
 #endif
@@ -119,7 +120,7 @@ int eccx08_eckey_init(eccx08_engine_key_t * cfg)
 
         cfg->bus_type = 0;
         cfg->bus_num = 0;
-        cfg->device_num = 0xC0;
+        cfg->device_num = 0xB0;
         cfg->slot_num = eccx08_engine_config.device_key_slot;
 
         return ENGINE_OPENSSL_SUCCESS;
@@ -277,7 +278,7 @@ int eccx08_eckey_isx08key(EC_KEY * ec, uint8_t *passwd_id)
 {
     int ret = ENGINE_OPENSSL_FAILURE;
     const BIGNUM* bn = EC_KEY_get0_private_key(ec);
-
+DEBUG_ENGINE("BIGNUM 0x%x\n", bn);
     if (bn)
     {
         uint8_t buf[32];
@@ -290,11 +291,14 @@ int eccx08_eckey_isx08key(EC_KEY * ec, uint8_t *passwd_id)
                 buf_ok = 1;
             }
         }
+DEBUG_ENGINE("buf_ok %d", buf_ok);
+
 #else
         if (BN_bn2binpad(bn, buf, sizeof (buf)))
         {
             buf_ok = 1;
         }
+DEBUG_ENGINE("buf_ok %d buf:%s", buf_ok, buf);
 #endif
 
         if (buf_ok && !memcmp(buf, "ATECCx08", 8))
