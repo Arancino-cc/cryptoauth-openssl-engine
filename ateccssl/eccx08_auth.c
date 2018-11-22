@@ -108,6 +108,7 @@ static ATCA_STATUS do_atecc_auth(const char *passwd, uint8_t slot_id)
 
 int eccx08_cbdata_to_password(void *callback_data, eccx08_engine_key_password_t *password)
 {
+    if (callback_data != NULL) {
     /* try to dereference callback data as string */
     const char *cb_pass = *((const char **) callback_data);
 
@@ -117,6 +118,8 @@ int eccx08_cbdata_to_password(void *callback_data, eccx08_engine_key_password_t 
         DEBUG_ENGINE("Raw password: %s\n", cb_pass);
         sscanf(cb_pass, "%02hu:%s", &password->auth_slot, password->password);
         return 1;
+    }
+	return 0;
     }
 }
 

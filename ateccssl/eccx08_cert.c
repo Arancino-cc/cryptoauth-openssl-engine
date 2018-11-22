@@ -196,6 +196,7 @@ ATCA_STATUS eccx08_cert_load_pubkey(const atcacert_def_t* def, const uint8_t key
     int i;
     uint8_t * pKeyTmp = OPENSSL_malloc(ATCA_BLOCK_SIZE*3);
 
+    DEBUG_ENGINE("Entered\n");
     if(!def || !keyout || !pKeyTmp)
     {
         return ATCA_BAD_PARAM;
@@ -206,6 +207,8 @@ ATCA_STATUS eccx08_cert_load_pubkey(const atcacert_def_t* def, const uint8_t key
         status = atcab_read_zone(def->public_key_dev_loc.zone,
                                  def->public_key_dev_loc.slot,
                                  i, 0, &pKeyTmp[i * 32], 32);
+        DEBUG_ENGINE("zone:%d slot:%d i:%d status:%d\n", def->public_key_dev_loc.zone,
+                                 def->public_key_dev_loc.slot, i, status);
     }
 
     if(ATCA_SUCCESS == status)

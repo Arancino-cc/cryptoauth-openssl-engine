@@ -141,12 +141,14 @@ static int get_cert(char *filename, atcacert_def_t * pCertDef, atcacert_def_t * 
             status = atcab_read_pubkey(11, g_signer_1_ca_public_key);
         }
 
+	DEBUG_ENGINE("Load puiblic key status: %#x signer:%d\n", status, pSignerDef);
         if(ATCA_SUCCESS == status)
         {
             /* Extract/Reconstruct the certificate */
             status = atcacert_read_cert(pCertDef, 
                                         g_signer_1_ca_public_key, 
                                         pCertRaw, &certRawSize);
+	    DEBUG_ENGINE("Read certificate status: %#x\n", status);
         }
 
         /* Make sure we release the device before checking if the operation succeeded */
