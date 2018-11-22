@@ -48,7 +48,8 @@ cp_backup() {
 
 # build library
 info "Building engine..."
-make TARGET_HAL=I2C libateccssl -j4
+#make TARGET_HAL=I2C libateccssl -j4
+make TARGET_HAL=I2C TARGET_ARCH=Linux DEB_HOST_GNU_TYPE=arm-linux-gnueabihf libateccssl -j4
 
 
 # test 0: engine load
@@ -62,7 +63,7 @@ info "Test engine loading..."
 }
 
 # test 1: sign file
-info "Test file signing..."
+info "Test file signing... $0"
 
 FILE_TO_SIGN=$0
 
