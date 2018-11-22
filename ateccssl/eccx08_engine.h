@@ -71,7 +71,7 @@ security implications */
 
 /** \brief Advertize certificate capabilities to OpenSSL (client certificate) */
 #ifndef ATCA_OPENSSL_ENGINE_ENABLE_CERTS
-#define ATCA_OPENSSL_ENGINE_ENABLE_CERTS        (0)
+#define ATCA_OPENSSL_ENGINE_ENABLE_CERTS        (1)
 #endif
 
 /** \brief Advertize ECDH capabilities to OpenSSL */
@@ -137,7 +137,7 @@ typedef struct
 } cmd_load_cert_params;
 
 int eccx08_cmd_ctrl(ENGINE *e, int cmd, long i, void *p, void(*f)(void));
-
+#define ECC_DEBUG
 #ifdef ECC_DEBUG
 #include <stdio.h>
 char * eccx08_strip_path(char * in_str);
