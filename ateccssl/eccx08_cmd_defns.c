@@ -107,7 +107,7 @@ static int get_cert(char *filename, atcacert_def_t * pCertDef, atcacert_def_t * 
     uint8_t *   pCertRaw = NULL;
     size_t      certRawSize = 0;
 
-    DEBUG_ENGINE("%s %p\n", filename, pCertDef);
+    DEBUG_ENGINE("%s cert:%p sign:%p\n", filename, pCertDef);
 
     if (!filename || !pCertDef || '\0' == filename[0])
     {
