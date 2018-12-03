@@ -114,6 +114,7 @@ SOURCES := $(call FIND,$(CRYPTOAUTHLIB_DIR)/lib,*.c)
 SOURCES += $(LIBATECCSSL_SOURCES)
 INCLUDE := $(dir $(call FIND, $(CRYPTOAUTHLIB_DIR)/lib, *.h))
 INCLUDE += $(dir $(call FIND, $(LIBATECCSSL_DIR), *.h))
+INCLUDE += /usr/local/ssl/include
 INCLUDE := $(sort $(INCLUDE))
 
 
@@ -163,6 +164,9 @@ LIBCRYPTOAUTH_OBJECTS := $(addprefix $(OUTDIR)/,$(notdir $(LIBCRYPTOAUTH_OBJECTS
 
 CFLAGS += $(addprefix -I, $(INCLUDE) $(TEST_INCLUDE) $(SYSTEM_INCLUDES))
 
+SSLDIR := /usr/local/ssl/lib
+#SSLDIR := /usr//lib
+
 # Regardless of platform set the vpath correctly
 vpath %.c $(call BACK2SLASH,$(sort $(dir $(SOURCES) $(TEST_SOURCES))))
 
@@ -186,7 +190,7 @@ $(OUTDIR)/libateccssl.so: $(LIBATECCSSL_OBJECTS) $(LIBCRYPTOAUTH_OBJECTS) | $(OU
 
 $(OUTDIR)/test: $(OUTDIR)/libateccssl.so $(TEST_OBJECTS) | $(OUTDIR)
 	@echo " [CC TEST] $@"
-	@$(CC) -o $@ $(TEST_OBJECTS) -L$(OUTDIR) -lateccssl -lcrypto -lssl
+	@$(CC) -o $@ $(TEST_OBJECTS) -L$(OUTDIR) -L$(SSLDIR) -lateccssl -lcrypto -lssl -ldl
 	
 install: $(OUTDIR)/libateccssl.so
 	mkdir -p $(DESTDIR)/usr/lib/$(DEB_HOST_GNU_TYPE)/engines-1.1/

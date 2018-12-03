@@ -78,8 +78,8 @@ int eccx08_get_iface_cfg(ATCAIfaceCfg* iface, eccx08_engine_key_t * key)
             switch (iface->iface_type)
             {
             case ATCA_I2C_IFACE:
-                //iface->atcai2c.bus = key->bus_num;
-                //iface->atcai2c.slave_address = key->device_num;
+                iface->atcai2c.bus = key->bus_num;
+                iface->atcai2c.slave_address = key->device_num;
 		printf("%s:%d bus:%d addr:%d\n", __FILE__, __LINE__, iface->atcai2c.bus, iface->atcai2c.slave_address);
                 break;
             case ATCA_SWI_IFACE:

@@ -120,7 +120,7 @@ int eccx08_eckey_init(eccx08_engine_key_t * cfg)
 
         cfg->bus_type = 0;
         cfg->bus_num = 0;
-        cfg->device_num = 0xB0;
+        cfg->device_num = 0xC0;
         cfg->slot_num = eccx08_engine_config.device_key_slot;
 
         return ENGINE_OPENSSL_SUCCESS;
@@ -919,7 +919,7 @@ int eccx08_pmeth_selector(ENGINE *e, EVP_PKEY_METHOD **pkey_meth,
     }
 }
 
-#if ATCA_OPENSSL_OLD_API
+#if !ATCA_OPENSSL_OLD_API
 /* These are from the OpenSSL 1.1.x API */
  void EVP_PKEY_meth_get_init(EVP_PKEY_METHOD *pmeth,
     int(**pinit) (EVP_PKEY_CTX *ctx))
